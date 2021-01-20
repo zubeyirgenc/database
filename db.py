@@ -188,7 +188,8 @@ def get_debts(webuser_id=None,id=None):
     with dbapi2.connect(current_app.config["database_url"]) as connection:
         cursor = connection.cursor()
         if webuser_id:
-            query = """SELECT TRANSAC.*,DEBT.*,COUNT(*) 
+            query = """SELECT * FROM TRANSAC,DEBT WHERE TRANSAC.ID=DEBT.TR_REF and transac.created_by=%s ORDER BY ID(DEBT)"""
+            """SELECT TRANSAC.*,DEBT.*,COUNT(*) 
                         FROM TRANSAC,DEBT,PAYMENT 
                             WHERE TRANSAC.ID=DEBT.TR_REF AND 
                             TRANSAC.CREATED_BY=%s AND 
@@ -198,11 +199,7 @@ def get_debts(webuser_id=None,id=None):
             query = """SELECT * FROM DEBT WHERE ID=%s"""
         else:
             query = """SELECT * FROM TRANSAC,DEBT WHERE TRANSAC.ID=DEBT.TR_REF ORDER BY ID(DEBT)"""
-            #query = """SELECT TRANSAC.*,DEBT.*,COUNT(PAYMENT.ID) 
-            #            FROM TRANSAC,DEBT,PAYMENT 
-            #                WHERE TRANSAC.ID=DEBT.TR_REF AND 
-            #                (debt.id=PAYMENT.debt_ref OR (SELECT COUNT(*) FROM PAYMENT WHERE DEBT_REF=DEBT.ID)=0) 
-            #                group by debt.id,transac.id ORDER BY ID(debt)"""
+
 
         try:
             if webuser_id:
