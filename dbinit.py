@@ -144,6 +144,3 @@ if __name__ == "__main__":
     initialize(url)
     insert(url, "PASSWORD_HASH", "EMAIL", "NAME", "SURNAME")
     initial(url)
-
-DELETE FROM TRANSAC WHERE ID=7;
-SELECT * FROM TRANSAC 
