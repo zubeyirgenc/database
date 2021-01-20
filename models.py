@@ -64,7 +64,7 @@ class Transaction:
 
 class Debt:
 	def __init__(self,debt):
-		from db import get_transaction
+		from db import get_transaction,payment_count
 		self.id = debt[0]
 		self.tr_ref = get_transaction(debt[1])
 		self.start_period = debt[2]
@@ -74,6 +74,8 @@ class Debt:
 		self.paid = debt[6]			#ödenen taksit saysi
 		try:
 			self.count = debt[7]
+			if payment_count()==self.count:
+				self.count=0
 		except:
 			pass
 

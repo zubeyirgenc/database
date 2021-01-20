@@ -24,15 +24,16 @@ def update(email=None, password_hash=None, name=None,surname=None):
             guncellenecekler.append(password_hash)
         query = query[:-2] + " "
         query += "WHERE EMAIL = %s"
+        guncellenecekler.append(email)
 
         try:
             cursor.execute(query, tuple(guncellenecekler))
-            webuser = cursor.fetchone()
+            # webuser = cursor.fetchone()
         except dbapi2.DatabaseError as err:
             print("Warning: ", err)
             pass
 
-    return webuser
+    # return webuser
 
 def get_webuser(email=None, id=None):
     asd = []
@@ -297,6 +298,21 @@ def get_debts_unfinish(webuser_id=None):
             pass
 
     return debts
+
+def payment_count():
+    with dbapi2.connect(current_app.config["database_url"]) as connection:
+        cursor = connection.cursor()
+        
+        query = """SELECT count(*) FROM PAYMENT"""
+       
+        try:
+            cursor.execute(query, tuple())
+            count = cursor.fetchone()[0]
+        except dbapi2.DatabaseError as err:
+            print("Warning: ", err)
+            pass
+    return count
+
 
 def get_payments(webuser_id=None,id=None):
     pay_list = []

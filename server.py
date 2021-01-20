@@ -205,7 +205,7 @@ def payment_member():
     form = PayementForm(debt_list=debts)
     if form.validate_on_submit():
         id = db.insert_transaction(form.amount.data,current_user.id)
-        debt_ = get_debts(id=form.debt_ref.data)
+        debt_ = db.get_debts(id=form.debt_ref.data)
         db.insert_payment(transaction_id=id,debt_id=form.debt_ref.data)
 
     return render_template("forms.html",form=FormInfo("Add Payement From Member",form))
