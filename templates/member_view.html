@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+  <div class="row ">    
+    <div class=" col-md-1 "></div>
+    <div class=" col-md-10 ">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">CREATED_DATE</th>
+      <th scope="col">AMOUNT</th>
+      <th scope="col">START_PREIOD</th>
+      <th scope="col">DUE_PERIOD</th>
+      <th scope="col">NUMBER_PAY</th>
+      <th scope="col">AMOUNT_PAY</th>
+      <th scope="col">PAID</th>
+      <th scope="col">NUMBER OF PAYMENT</th>
+      <th scope="col"></th>
+      {%if current_user.is_admin%}     
+      <th></th>
+      {%endif%}
+    </tr>
+  </thead>
+  <tbody>
+    {%for debt in debts%}
+    <tr>
+      <th scope="row">{{debt.id}}</th>
+      <td>{{debt.tr_ref.created_date}}</td>
+      <td>{{debt.tr_ref.amount}}</td>
+      <td>{{debt.start_period.strftime("%B %Y")}}</td>
+      <td>{{debt.due_period.strftime("%B %Y")}}</td>
+      <td>{{debt.number_pay}}</td>
+      <td>{{debt.amount_pay}}</td>
+      <td>{{debt.paid}}</td>
+      <td>{{debt.count}}</td>
+
+      {%if current_user.is_admin%}
+      <td>{%if debt.tr_ref.confirmed_by%}Onaylandı{%else%}<a href="{{url_for('confirm_tr_page',id=debt.tr_ref.id)}}">Onayla</a>{%endif%}</td>      
+      <td><a href="{{url_for('remove_debt',debt_id=debt.id)}}">Sil</a></td>
+      {%else%}
+      <td>{%if debt.tr_ref.confirmed_by%}Onaylandı{%else%}Onaylanmadı{%endif%}</td>
+      {%endif%}
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">created_date</th>
+      <th scope="col">amount</th>
+      <th scope="col">confirmed_by</th>
+      <th scope="col">debt amount</th>
+      <th scope="col">pay num</th>
+      <th scope="col">confirm</th>      
+      <th scope="col">which debt</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for pay in pays%}
+    <tr>
+      <th scope="row">{{pay.id}}</th>
+      <td>{{pay.tr_ref.created_date}}</td>
+      <td>{{pay.tr_ref.amount}}</td>
+      <td>{{pay.debt_ref.number_pay}}</td>
+      <td>{{pay.debt_ref.tr_ref.amount}}</td>
+      <td>{{pay.pay_num}}</td>
+      {%if current_user.is_admin%}
+      <td>{%if pay.tr_ref.confirmed_by%}Onaylandı{%else%}<a href="{{url_for('confirm_tr_page',id=pay.tr_ref.id)}}">Onayla</a>{%endif%}</td>
+      {%else%}
+      <td>{%if pay.tr_ref.confirmed_by%}Onaylandı{%else%}Onaylanmadı{%endif%}</td>
+      {%endif%}        
+      <td>{{pay.debt_ref.id}}</td>    
+    </tr>
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+{% endblock %}
+
+
+    

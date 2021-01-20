@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container">
+  <div class="row ">    
+    <div class=" col-md-3 "></div>
+    <div class=" col-md-3 ">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">NAME</th>
+      <th scope="col">SURNAME</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">CREATED_DATE</th>
+      <th scope="col">Onayla</th>      
+      <th scope="col">Sil</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for member in members%}
+    <tr>
+      <th scope="row">{{member.id}}</th>
+      <td>{{member.name}}</td>
+      <td>{{member.surname}}</td>
+      <td>{{member.email}}</td>
+      <td>{{member.created_date}}</td>
+      <td><a href="{{url_for('confirm_member_page',id=member.id)}}">Confirm Member</a></td>      
+      <td><a href="{{url_for('remove_webuser',webuser_id=member.id)}}">Delete Member</a></td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+{% endblock %}

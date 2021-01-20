@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block extra_head %}
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    <!-- <script src="{{ url_for('static', filename='js/general.js') }}"></script> -->
+    
+    <script type="text/javascript">
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="container moneytrade-form">
+  <h2 class="moneytrade-title-form">{{ form.title }}</h2>
+
+  <!-- {% for category, message in get_flashed_messages(with_categories=true) %} -->
+  <!-- <div class="alert alert-{{ category }}" role="alert">
+      {{ message }}
+  </div>
+  {% endfor %} -->
+
+  {% if form.errors %}
+  <div class="alert alert-danger moneytrade-alert-list" role="alert">
+    <ul>
+      {% for error in form.errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {{ form.form.open|safe }}
+    {% for field in form.form %}
+    {% if field.type in ["SubmitField"] %}
+    <div class="form-group moneytrade-form-btn-group">
+      {{ field }}
+    </div>
+    {% elif field == form.form.csrf_token %}
+    <div class="form-group moneytrade-form-btn-group">
+      {{ field }}
+    </div>
+    {% else %}
+    <div class="form-group moneytrade-form-group">
+      {{ field.label }}
+      {{ field }}
+    </div>
+    {% endif %}
+    {% endfor %}
+  {{ form.form.close|safe }} <!-- return """</form>""" -->
+</div>
+{% endblock %}

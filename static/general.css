@@ -1,0 +1,30 @@
+.moneytrade-title {
+  color: #e9601a;
+}
+
+.moneytrade-title-form {
+  color: #e9601a;
+  text-align: center;
+}
+
+.moneytrade-form {
+  max-width: 400px;
+}
+
+form.moneytrade-form {
+  max-width: 250px;
+  margin: auto;
+}
+
+.moneytrade-footer {
+  text-align: center;
+  height: 100px;
+}
+
+.moneytrade-alert-list {
+  padding-left: 0px;
+}
+
+.moneytrade-form-btn-group {
+  text-align: center;
+}
