@@ -197,11 +197,12 @@ def get_debts(webuser_id=None,id=None):
         elif id:
             query = """SELECT * FROM DEBT WHERE ID=%s"""
         else:
-            query = """SELECT TRANSAC.*,DEBT.*,COUNT(PAYMENT.ID) 
-                        FROM TRANSAC,DEBT,PAYMENT 
-                            WHERE TRANSAC.ID=DEBT.TR_REF AND 
-                            (debt.id=PAYMENT.debt_ref OR (SELECT COUNT(*) FROM PAYMENT WHERE DEBT_REF=DEBT.ID)=0) 
-                            group by debt.id,transac.id ORDER BY ID(debt)"""
+            query = """SELECT * FROM TRANSAC,DEBT WHERE TRANSAC.ID=DEBT.TR_REF ORDER BY ID(DEBT)"""
+            #query = """SELECT TRANSAC.*,DEBT.*,COUNT(PAYMENT.ID) 
+            #            FROM TRANSAC,DEBT,PAYMENT 
+            #                WHERE TRANSAC.ID=DEBT.TR_REF AND 
+            #                (debt.id=PAYMENT.debt_ref OR (SELECT COUNT(*) FROM PAYMENT WHERE DEBT_REF=DEBT.ID)=0) 
+            #                group by debt.id,transac.id ORDER BY ID(debt)"""
 
         try:
             if webuser_id:
